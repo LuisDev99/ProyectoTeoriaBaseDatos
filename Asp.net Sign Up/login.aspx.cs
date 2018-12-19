@@ -8,10 +8,16 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
+using MySql.Data.MySqlClient;
+using System.Configuration;
+using System.Data;
+
 namespace Asp.net_Sign_Up
 {
     public partial class login : System.Web.UI.Page
     {
+
+        MySqlConnection con = new MySqlConnection("server=127.0.0.1;user id=root; pwd = root; database=proyecto_teoria"); //AQUI SE CAMBIA LA BASE DE DATOS
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -20,29 +26,30 @@ namespace Asp.net_Sign_Up
         protected void Submit_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("Home.aspx");
+            
+            con.Open();
+            MySqlCommand cmd = new MySqlCommand("select * from usuarios where usuario = @username and clave = @userpass", con);
 
-            //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            cmd.Parameters.AddWithValue("@username", txtID.Text); //ID
+            cmd.Parameters.AddWithValue("@userpass", txtName.Text); //Name 
 
-            //con.Open();
-            //SqlCommand cmd = new SqlCommand("select * from login where uname = @username and passwd = @password", con);
+            MySqlDataReader sdr = cmd.ExecuteReader();
 
-            //cmd.Parameters.AddWithValue("@username", TextBox1.Text);
-            //cmd.Parameters.AddWithValue("@password", TextBox2.Text);
+            if (sdr.Read())
+            {
 
-            //SqlDataReader sdr = cmd.ExecuteReader();
+                Session["username"] = txtID.Text.ToString();
+                Session["userpass"] = txtName.Text.ToString();
 
-            //if (sdr.Read())
-            //{
-            //    Response.Redirect("Home.aspx");
+                Response.Redirect("MainMenu.aspx");
 
-            //}
-            //else
-            //{
-            //    Label1.Text = "Username or Password Incorrect...!";
-            //}
+            }
+            else
+            {
+                Label1.Text = "Username or Password Incorrect...!";
+            }
 
-            //con.Close();
+            con.Close();
         }
     }
 }

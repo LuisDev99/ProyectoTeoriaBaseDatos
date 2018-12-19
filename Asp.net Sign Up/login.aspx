@@ -24,8 +24,8 @@
                 <div class="content">
                     <h2>Entrar al mejor proyecto</h2>
 
-                    <asp:TextBox ID="TextBox1" placeholder="Username" runat="server"></asp:TextBox><br />
-                    <asp:TextBox ID="TextBox2" placeholder="Password" TextMode="Password" runat="server"></asp:TextBox><br />
+                    <asp:TextBox ID="txtID" placeholder="Username" runat="server"></asp:TextBox><br />
+                    <asp:TextBox ID="txtName" placeholder="Password" TextMode="Password" runat="server"></asp:TextBox><br />
                     <asp:Button ID="Submit" runat="server" OnClick="Submit_Click" Text="Submit" />
 
                     <asp:Label ID="Label1" Style="padding-left:4vw;padding-top:2vw;" Font-Size="Medium" ForeColor="red" runat="server" Text=""></asp:Label>
